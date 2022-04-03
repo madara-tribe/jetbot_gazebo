@@ -1,0 +1,5 @@
+<launch>
+  <arg name="model"/>
+  <arg name="urdf_file" default="$(find xacro)/xacro --inorder '$(find jetbot_simulation)/urdf/dtw_robot3.xacro'" />
+  <param name="robot_description" command="$(arg urdf_file)" />
+</launch>
