@@ -81,12 +81,12 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        wheel_left_link:
+        left_wheel_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        wheel_right_link:
+        right_wheel_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false

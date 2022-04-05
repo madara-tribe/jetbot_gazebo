@@ -15,11 +15,31 @@
 
   <!-- caster -->
   <gazebo reference="caster_0">
-    <mu1>0.2</mu1>
-    <mu2>0.2</mu2>
-    <material>Gazebo/white</material>
+    <turnGravityOff>false</turnGravityOff>
+    <material>Gazebo/White</material>
+    <mu1 value="0.0"/>
+    <mu2 value="0.0"/>
   </gazebo>
   
+  <!-- ros_control plugin -->
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/jetbot</robotNamespace>
+      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+      <legacyModeNS>true</legacyModeNS>
+    </plugin>
+  </gazebo>
+
+  <!-- Odometry plugin-->
+  <gazebo>
+    <plugin name="ground_truth" filename="libgazebo_ros_p3d.so">
+      <frameName>world</frameName>
+      <bodyName>base_link</bodyName>
+      <topicName>/tracker</topicName>
+      <updateRate>10.0</updateRate>
+    </plugin>
+  </gazebo>
+
   <gazebo>
     <plugin name="turtlebot3_burger_controller" filename="libgazebo_ros_diff_drive.so">
       <commandTopic>cmd_vel</commandTopic>

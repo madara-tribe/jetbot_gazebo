@@ -23,57 +23,11 @@
   <xacro:property name="camera_link" value="0.01" /> <!-- Size of square 'camera' box -->
   <xacro:property name="axel_offset" value="0.05" /> <!-- Space btw top of beam and the each joint -->
 
-  <!-- Default wheel joint-->>
-  <xacro:macro name="wheel_macro" params="parent prefix xyz color">
-    <joint name="${prefix}_joint" type="continuous">
-      <parent link="${parent}"/>
-      <child link="${prefix}_link"/>
-      <origin xyz="${xyz}" rpy="0 0 0"/>
-      <axis xyz="0 -1 0"/>
-    </joint>
-    <xacro:gazebo_transmission p="${prefix}"/>
-    <link name="${prefix}_link">
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 1.57079632679"/>
-      <geometry>
-	      <mesh filename="package://jetbot_description/meshes/DAE/JetBot-v3-Wheel222.dae"/>
-      </geometry>
-      <material name="${color}"/>
-    </visual>
-
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 1.57079632679"/>
-      <geometry>
-	      <mesh filename="package://jetbot_description/meshes/DAE/JetBot-v3-Wheel222.dae"/>
-      </geometry>
-    </collision>
-
-      <inertial>
-        <origin xyz="0 0 0" rpy="0 1.5707 1.5707"/>
-        <mass value="${wheel_mass}" />
-        <xacro:cylinder_inertia  m="${wheel_mass}"
-          r="${wheel_radius}" h="${wheel_width}" />
-      </inertial>
-    </link>
-    <gazebo reference="${prefix}_link">
-      <mu1>0.2</mu1>
-      <mu2>0.2</mu2>
-      <kp value="50000" />
-      <kd value="10" />
-      <material>Gazebo/white</material>
-    </gazebo>
-  </xacro:macro>
-
   <!-- Used for fixing robot to Gazebo 'base_link' -->
   <!-- base_footprint Definition -->
-  <link name="odom"/>
   <link name="base_footprint" />
-  <joint name="odom_footprint" type="fixed">
-    <parent link="odom" />
-    <child  link="base_footprint" />
-  </joint>
 
-  <joint name="footprint_base" type="fixed">
+  <joint name="base_joint" type="fixed">
     <parent link="base_footprint" />
     <child  link="base_link" />
     <origin xyz="0.0 0.0 0.030"/>
@@ -141,13 +95,6 @@
 
   </link>
 
-  <gazebo reference="caster_0">
-    <turnGravityOff>false</turnGravityOff>
-    <material>Gazebo/White</material>
-    <mu1 value="0.0"/>
-    <mu2 value="0.0"/>
-  </gazebo>
-
   <!-- Camera joint-->
   <joint name="camera_joint" type="fixed">
     <axis xyz="0 0 1" />
@@ -192,25 +139,4 @@
 	  parent="base_link" prefix="imu_sensor">
   </xacro:imu_macro>
   
-  <!-- gazebo plugins  -->
-  <!-- ros_control plugin -->
-  <gazebo>
-    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-      <robotNamespace>/jetbot</robotNamespace>
-      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
-      <legacyModeNS>true</legacyModeNS>
-    </plugin>
-  </gazebo>
-
-  <!-- Odometry plugin-->
-  <gazebo>
-    <plugin name="ground_truth" filename="libgazebo_ros_p3d.so">
-      <frameName>world</frameName>
-      <bodyName>base_link</bodyName>
-      <topicName>/tracker</topicName>
-      <updateRate>10.0</updateRate>
-    </plugin>
-  </gazebo>
-
-
 </robot>
