@@ -23,7 +23,7 @@ diff_drive_controller:
   wheel_radius_multiplier    : 1.0 # default: 1.0 
   # tf
   # enable_odom_tf: true
-  base_frame_id: base_footprint #base_link
+  base_frame_id: base_link
   odom_frame_id: odom
     
   # limits
